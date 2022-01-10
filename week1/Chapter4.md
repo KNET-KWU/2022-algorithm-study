@@ -90,7 +90,7 @@ import java.util.List;
 
 public class FindMovingAverage {
     private List<Double> result;
-    //시간복잡도 3^N
+    //시간복잡도 N*M - M^2 + M
     public List<Double> movingAverage1(List<Double> arr, int range){
         result = new ArrayList<>();
         double sum = 0;
