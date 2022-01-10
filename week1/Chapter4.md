@@ -1,8 +1,10 @@
 알고리즘의 시간 복잡도 분석
 ---
 
- 알고리즘의 시간복잡도는 일반적으로 반복문에 의해서 판단됩니다. <br>
- 수행시간에 관해서는 여러 다양한 요인들이 있지만 그것은 사용하는 언어, 개발 환경 ...등 너무나도 변칙적이기 때문에 우리는 반복문이 수행되는 횟수를 통해서 시간예측합니다.<br>
+ 알고리즘의 시간복잡도는 일반적으로 반복문에 의해서 판단됩니다.
+ 
+ 수행시간에 관해서는 여러 다양한 요인들이 있지만 그것은 사용하는 언어, 개발 환경 ...등 너무나도 변칙적이기 때문에 우리는 반복문이 수행되는 횟수를 통해서 시간예측합니다.
+ 
  한가지 예를 보도록 하겠습니다.
 
  
@@ -137,11 +139,17 @@ movingAverage1의 경우에는 각 원소마다 range번씩  반복문을 돌기
 선형이하 시간 알고리즘
 ---
    binarySearch를 예시로 들 수 있습니다. <br>
+   
    선형이하 시간을 사용하려면 주어진 데이터를 모두 확인하는 것이 아닌 일부분을 사용하고서 원하는 결과를 도출할 수 있어야합니다. <br>
+   
    하지만 이는 생각보다 쉽지 않죠. 따라서 우리는 기본적인 사전 조건을 설정하고 선형이하 시간 알고리즘을 구현할 수 있습니다. <br>
+   
    그 사전조건은 바로 정렬이 되어 있다는 것입니다. <br>
+   
    정렬의 기준은 다를 수 있지만 일반적으로 오름차순 또는 시간 순으로 정렬이 되어 있을 것입니다. <br>
+   
    따라서 어느 한 지점을 임의로 잡았을 때(일반적으로 가지고 있는 데이터의 가운데 원소 위치를 잡는다.) 내가 찾는 조건이 맞는 지 검사하고 그에 따라서 앞이나 뒤 영역만 다시 검사하면 됩니다.<br>
+   
    글로만 이해해서는 잘 모르겠으니 코드를 통해서 살펴보도록하죠.<br>
 
  
@@ -267,3 +275,98 @@ integer의 경우에는 일반적으로 4byte를 차지함으로 저장공간에
 그러면 3개의 비트로 표현되는 숫자는 0~7까지라고 생각하면 된다. 이때 만약에 사용되는 비트수가 1개 더 증가한다면?
 
 2^3 -> 2^4범위로 증가하게 되고 표현할 수 있는 영역이 2배 그리고 이를 저장해야할 공간도 대략 2배로 증가하게 되니 지수시간 알고리즘이라고 할 수 있다.
+
+
+### 시간 복잡도
+
+시간 복잡도 : 가장 기본적인 연산이 수행되는 시간을 함수로 표현한 것
+ex) 가장 기본적인 연산 : 사칙연산, 비교연산, 대입연산 등
+
+우리는 이것을 보통 빅오 표기법으로 표현합니다.(빅오 표기법에 관해서는 자세한 설명을 생략하도록 하겠습니다.)
+
+실제 코드에서 시간복잡도를 예측 해보도록하죠
+
+입력으로 리스트가 주어졌을 때 그 리스트 안에서 부분합의 값이 가장 큰 결과를 구하는 함수를 만든다고 생각해봅시다.
+
+아래 코드는 모두 같은 기능을 하는 함수이지만 서로 다른 알고리즘을 사용하여 구하였습니다.
+
+```
+public class FindMaxSum {
+    // 시간 복잡도 : N^2
+    public int betterMaxSum(final List<Integer> arr){
+        int N = arr.size(), ret = Integer.MIN_VALUE;
+        for(int i = 0; i<N; i++){
+            int sum = 0;
+            for(int j = i; j<N; j++){
+                sum += arr.get(j);
+                ret = Math.max(ret, sum);
+            }
+        }
+        return ret;
+    }
+    // 시간 복잡도 : N*(log N)
+    public int fastFindSum(List<Integer> A, int lo, int hi){
+        if(lo ==  hi)
+            return A.get(lo);
+
+        int mid = (lo + hi) / 2;
+        int left = Integer.MIN_VALUE, right = Integer.MIN_VALUE, sum = 0;
+        for(int i = mid; i >= lo; i--){
+            sum += A.get(i);
+            left = Math.max(left, sum);
+        }
+        sum = 0;
+        for (int i = mid + 1; i <= hi; ++i) {
+            sum+=A.get(i);
+            right = Math.max(sum, right);
+        }
+        int single = Math.max(fastFindSum(A,lo, mid), fastFindSum(A, mid+1, hi));
+        return Math.max(left + right, single);
+    };
+
+    public int fastTestMaxSum(List<Integer> A){
+        int ret = Integer.MIN_VALUE, psum = 0;
+
+        for (Integer i : A) {
+            psum = Math.max(psum, 0) + i;
+            ret = Math.max(psum, ret);
+        }
+        return ret;
+    }
+    //시간 복잡도 : O(n)
+    public static void main(String[] args) {
+        FindMaxSum findMaxSum = new FindMaxSum();
+
+        System.out.println(findMaxSum.fastTestMaxSum(List.of(-7, 4, -3, 6, 3, -8, 3, 4)));
+    }
+
+}
+```
+
+### 수행시간 예측
+
+수행 시간예측을 위해서는 시간복잡도 이외에도 많은 여러가지 요소를 고려해야합니다. 
+
+대표적으로 
+
+```
+* 시간복잡도가 프로그램의 실제 수행 속도를 반영하지 못하는 경우
+* 반복문의 내부가 복잡한 경우
+* 메모리 사용 패턴이 복잡한 경우
+* 언어와 컴파일러의 차이
+* 구형 컴퓨터를 사용하는 경우
+```
+
+등이 있습니다.
+
+### 계산 복잡도 클래스
+
+P:  결정론적 튜링 기계로 다항 시간 안에 풀 수 있는 판정 문제를 모아 놓은 복잡도 종류이다.
+
+NP: 비결정론적 튜링 기계(NTM)로 다항 시간 안에 풀 수 있는 판정 문제의 집합으로, NP는 비결정론적 다항시간(非決定論的 多項時間, Non-deterministic Polynomial time)의 약자이다.
+
+NP-Hard: NP-hard는 NP에 속하는 모든 판정 문제를 다항 시간에 다대일 환산할 수 있는 문제들의 집합이다. 다시 말하면, NP-난해는 적어도 모든 NP 문제만큼은 어려운 문제들의 집합이다.
+
+NP-Complete: NP-완전(NP-complete, NP-C, NPC)은 NP 집합에 속하는 결정 문제 중에서 가장 어려운 문제의 부분집합으로, 모든 NP 문제를 다항 시간 내에 NP-완전 문제로 환산할 수 있다.
+
+![P-NP problem](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/P_np_np-complete_np-hard.svg/1920px-P_np_np-complete_np-hard.svg.png)
