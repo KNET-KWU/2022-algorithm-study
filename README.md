@@ -23,6 +23,5 @@
 ### Member
 
 + 리더 : [@Tianea2160](https://github.com/tianea2160)
-+ 참가자 : 
-+ [@sung-jee](https://github.com/kim-sung-jee)
-+ 
++ 참가자 : [@sung-jee](https://github.com/kim-sung-jee)
++ 참가자 : [@leesina103](https://github.com/leesina103)
