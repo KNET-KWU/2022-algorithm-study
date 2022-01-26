@@ -205,6 +205,8 @@ int check[50];
 int n,d,p;
 
 //n을 행렬의 크기라 했을때 O(n^3)
+//슈트라센알고리즘을 이용하면 시간을 더 줄일 수 있다
+//카라츠바 알고리즘과 비슷한 느낌의 계산
 matrix operator*(const matrix &a, const matrix &b) {
     matrix res(n, vector<double>(n));
 
@@ -257,7 +259,7 @@ int main(){
                 }
             }
         }
-        //O(n^3M)
+        //O(n^3logM)
         matrix answ=power(board,d);
         int t,temp;cin>>t;
         while(t--) {
