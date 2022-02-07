@@ -791,7 +791,23 @@ int main(void) {
 }
 ```
 
-### 더 빠른 해법
+### 더 빠른 해법(1) - 이분 탐색
+        
+시작하기 앞서 우리는 다음과 같은 배열을 생각해 볼 수 있다. <br><br>
+        
+    - C[i] := 길이가 i+1인 LIS들의 마지막 원소들 중 최솟값을 저장
+    - n := 순회하는 다음 수
+    - count := 지금까지 찾은 중간 lis으 길이
+    - last := C[count]의 원소
+<br>
+        
+이때 다음과 같은 점화식을 생각할 수 있다. <br>
+        
+<p align="center">
+<img width="1440" alt="스크린샷 2022-02-07 오후 3 09 12" src="https://user-images.githubusercontent.com/91893721/152733835-50a2fcf8-c6e6-46c2-bbeb-5ffe49988ff2.png">
+주어진 점화식을 다음과 같이 해석할 수 있다. <br>
+첫 번째, 
+    
 
 O(nlgn)
 <br><br>
