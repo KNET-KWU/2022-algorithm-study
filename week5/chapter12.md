@@ -40,6 +40,12 @@ optimize(locations,cameras)= 카메라를 설치할 수 있는 위치 locations�
 
 decision(locations, cameras, gap)=카메라를 설치할 수 있는 위치 locations와 카메라의 수 cameras가 주어질 때, 이들을 적절히 배치해 모든 카메라의 간격이 **gap 이상**이 되도록 하는 방법
 이 있는지 판단
+
+
+
+> 카메라 설치할지 말지 선택하는 decision은 탐욕법이다( 예를 들어 0km 위치에 카메라를 설치하지 않는 답이 존재한다고 가정하면
+> 그 답에서 가장 왼쪽에 있는 카메라를 0km 지점으로 옮겨도 똑같이 답이 되니 0km를 항상 선택해도 된다.
+> 
 ```cpp
 bool decision(const vector<double>& location, int cameras, double gap) {
 	double limit = -1;
@@ -69,8 +75,6 @@ double optimize(const vector<double>& location, int cameras) {
 > ** location이 정렬되어 있어야만 448p 의 그림 12.1 (a)와 같은 형태가 성립한다**
 
 
-> 카메라 설치할지 말지 선택하는 decision은 탐욕법이다( 예를 들어 0km 위치에 카메라를 설치하지 않는 답이 존재한다고 가정하면
-> 그 답에서 가장 왼쪽에 있는 카메라를 0km 지점으로 옮겨도 똑같이 답이 되니 0km를 항상 선택해도 된다.
 
 * 가장 왼쪽에 있는 지점부터 gap이상을 유지하며 카메라를 채워 나가도 된다.
 
