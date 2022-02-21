@@ -22,6 +22,7 @@
 
 ### Member
 
-+ 리더 : [@Tianea2160](https://github.com/tianea2160)
-+ 참가자 : [@sung-jee](https://github.com/kim-sung-jee)
-+ 참가자 : [@leesina103](https://github.com/leesina103)
+  > kw 대학교 KNET동아리 알고리즘 스터디 일원들
+
+### Changes in Study
+  > 기존에는 1권인 15장 까지 모두 하는 것을 계획하였으나 겨울방학까지 진행하는 것을 목표로 하였고 중간에 동적계획법에 관하여 시간을 추가적으로 더 소요하였기 때문에 15장을 마무리하지 못한 채 스터디를 마무리 하게 되었습니다.
