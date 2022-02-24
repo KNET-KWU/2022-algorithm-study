@@ -652,7 +652,8 @@ int main(void) {
 //The cheater can win by 612 seconds with r = 14.29km and k = 85.71km.
 //The cheater cannot win.
 ```
-  
+
+<br><br><br><br>
   
 ## 문제: 꽃가루 화석 (문제 ID: FOSSIL, 난이도: 상)
 
