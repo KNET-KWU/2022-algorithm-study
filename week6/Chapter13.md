@@ -654,6 +654,141 @@ int main(void) {
 ```
   
   
+## 문제: 꽃가루 화석 (문제 ID: FOSSIL, 난이도: 상)
+
+```c++
+// https://algospot.com/judge/problem/read/FOSSIL
+// code_13.8 과 code_13.9 융합
+
+#include <vector>
+#include <utility>
+#include <iostream>
+
+struct point {
+    double y, x;
+};
+
+// 입력에 주어진 볼록 다각형
+std::vector<point> hull1, hull2;
+
+// 위 껍질에 속하는 선분들과 아래 껍질에 속하는 선분들
+std::vector<std::pair<point, point> > upper, lower;
+
+// hull이 반시계방향으로 주어지므로, 인접한 두 점에 대해 x가
+// 증가하는 방향이면 아래쪽 껍질, x가 감소하는 방향이면 위쪽 껍질이다.
+void decompose(const std::vector<point>& hull) {
+    int n = hull.size();
+    
+    // 문제 조건 : 주어진 두 다각형의 모든 내각은 180도 미만입니다.
+    for (int i = 0; i < n; i++) {
+        if (hull[i].x < hull[(i+1)%n].x)
+            lower.push_back(std::make_pair(hull[i], hull[(i+1)%n]));
+        else if (hull[i].x > hull[(i+1)%n].x)
+            upper.push_back(std::make_pair(hull[i], hull[(i+1)%n]));
+    }
+}
+
+// [a.x, b.x] 구간 안에 x가 포함되나 확인한다.
+bool between(const point& a, const point& b, double x) {
+    return (a.x <= x && x <= b.x) || (b.x <= x && x <= a.x);
+}
+
+// (a, b) 선분과 주어진 위치의 수직선이 교차하는 위치를 반환한다.
+double at(const point& a, const point& b, double x) {
+    double dy = b.y - a.y, dx = b.x - a.x;
+    return a.y + dy * (x - a.x) / dx;
+}
+
+// 두 다각형의 교집합을 수직선으로 잘랐을 때 단면의 길이를 반환한다.
+double vertical(double x) {
+    double minUp = 1e20, maxLow = -1e20;
+
+    // 위 껍질의 선분을 순회하며 최소 y 좌표를 찾는다.
+    for (int i = 0; i < upper.size(); ++i)
+        if (between(upper[i].first, upper[i].second, x))
+            minUp = std::min(minUp, at(upper[i].first, upper[i].second, x));
+
+    // 아래 껍질의 선분을 순회하며 최대 x 좌표를 찾는다.
+    for (int i = 0; i < lower.size(); ++i)
+        if (between(lower[i].first, lower[i].second, x))
+            maxLow = std::max(maxLow, at(lower[i].first, lower[i].second, x));
+
+    return minUp - maxLow;
+}
+
+// 다각형에서 가장 작은 x값 반환
+double minX(const std::vector<point>& a) {
+    double ans = 1e20;
+    for (int i = 0; i < a.size(); ++i)
+        ans = std::min(ans, a[i].x);
+    return ans;
+}
+
+// 다각형에서 가장 큰 x값 반환
+double maxX(const std::vector<point>& a) {
+    double ans = -1e20;
+    for (int i = 0; i < a.size(); ++i)
+        ans = std::max(ans, a[i].x);
+    return ans;
+}
+
+double solve() {
+    // 수직선이 두 다각형을 모두 만나는 x 좌표의 범위를 구한다.
+    double lo = std::max(minX(hull1), minX(hull2));
+    double hi = std::min(maxX(hull1), maxX(hull2));
+
+    // 예외 처리: 두 다각형이 아예 겹치지 않는 경우
+    if (hi < lo) return 0;
+
+    // 삼분 검색
+    for (int iter = 0; iter < 100; ++iter) {
+        double aab = (lo*2 + hi) / 3.0;
+        double abb = (lo + hi*2) / 3.0;
+        if (vertical(aab) < vertical(abb))
+            lo = aab;
+        else
+            hi = abb;
+    }
+
+    return std::max(0.0, vertical(hi));
+}
+
+int main(void) {
+    int c; std::cin >> c;
+    for (int i=0;i<c;i++) {
+        int n, m; std::cin >> n >> m;
+        
+        hull1.clear(); hull2.clear();
+        hull1.resize(n); hull2.resize(m);
+        
+        for (int j=0;j<n;j++)
+            std::cin >> hull1[j].x >> hull1[j].y;
+        for (int j=0;j<m;j++)
+            std::cin >> hull2[j].x >> hull2[j].y;
+        
+        upper.clear(); lower.clear();
+        decompose(hull1); decompose(hull2);
+        
+        printf("%.8lf \n", solve());
+    }
+    
+    return 0;
+}
+
+//2
+//5 5
+//35.74 35.85 69.64 50.00 73.52 82.55 43.50 92.22 17.67 76.18
+//16.47 8.02 60.98 14.62 66.80 37.74 45.89 67.22 13.04 55.19
+//4 3
+//73.84 11.41 71.61 32.72 39.87 38.84 22.41 17.87
+//75.13 51.64 47.72 87.34 15.97 64.56
+
+
+// 출력
+//27.6529680365
+//0.000000
+
+```
   
   
   
@@ -662,9 +797,7 @@ int main(void) {
   
   
   
-  
-  
-  
+##
   
   
   
