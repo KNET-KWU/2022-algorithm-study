@@ -20,9 +20,17 @@
   
   ![book to study](https://book.algospot.com/static/img/cover1-small.png) ![book to study](https://book.algospot.com/static/img/cover2-small.png)
 
+### Goal
+  > 알고리즘 문제 해결 전략 1권 끝내기
+  > 
 ### Member
-
   > kw 대학교 KNET동아리 알고리즘 스터디 일원들
+  > + 스터디장 : [@Tianea2160](https://github.com/tianea2160)
+  > + 참가자 : [@sung-jee](https://github.com/kim-sung-jee)
+  > + 참가자 : [@leesina103](https://github.com/leesina103)
+  > + 참가자 : [@mjswindells](https://github.com/mjswindells)
+  > + 참가자 : [@mdj1412](https://github.com/mdj1412)
+  > + 참가자 : [@hweyoung](https://github.com/hweyoung)
 
 ### Changes in Study
   > 기존에는 1권인 15장 까지 모두 하는 것을 계획하였으나 겨울방학까지 진행하는 것을 목표로 하였고 중간에 동적계획법에 관하여 시간을 추가적으로 더 소요하였기 때문에 15장을 마무리하지 못한 채 스터디를 마무리 하게 되었습니다.
